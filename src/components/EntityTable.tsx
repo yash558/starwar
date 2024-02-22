@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import React, { useState, useEffect } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-
-
+  PaginationPrevious
+} from "@/components/ui/pagination";
+import EntityDetails from './EntityDetails'; // Import the EntityDetails component
 
 interface EntityTableProps {
   entities: any[];
@@ -32,7 +37,6 @@ const EntityTable: React.FC<EntityTableProps> = ({ entities, onRowClick }) => {
     entity.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
   const indexOfLastEntity = currentPage * entitiesPerPage;
   const indexOfFirstEntity = indexOfLastEntity - entitiesPerPage;
   const currentEntities = filteredEntities.slice(indexOfFirstEntity, indexOfLastEntity);
@@ -40,7 +44,7 @@ const EntityTable: React.FC<EntityTableProps> = ({ entities, onRowClick }) => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <>
+    <div className="entity-table-container bg-opacity-25 backdrop-filter backdrop-blur-lg p-4 rounded-md">
       <Input
         type="text"
         placeholder="Search by name"
@@ -49,7 +53,7 @@ const EntityTable: React.FC<EntityTableProps> = ({ entities, onRowClick }) => {
         className="p-2 mb-4 border w-64 border-gray-300 rounded-md"
       />
 
-      <div className='shadow-md rounded'>
+      <div className='shadow-md rounded bg-opacity-25 backdrop-filter backdrop-blur-lg'>
         <Table className="dark">
           <TableHeader className="dark:bg-gray-800 rounded-md">
             <TableRow>
@@ -64,7 +68,11 @@ const EntityTable: React.FC<EntityTableProps> = ({ entities, onRowClick }) => {
           </TableHeader>
           <TableBody>
             {currentEntities.map((entity, index) => (
-              <TableRow key={index} onClick={() => onRowClick(entity)} style={{ cursor: 'pointer' }}>
+              <TableRow
+                key={index}
+                onClick={() => onRowClick(entity)} // Trigger onRowClick when a row is clicked
+                style={{ cursor: 'pointer' }}
+              >
                 <TableCell>{entity.name}</TableCell>
                 <TableCell>{entity.birth_year}</TableCell>
                 <TableCell>{entity.gender}</TableCell>
@@ -93,13 +101,12 @@ const EntityTable: React.FC<EntityTableProps> = ({ entities, onRowClick }) => {
           </PaginationContent>
           <PaginationNext
             onClick={() => setCurrentPage(currentPage + 1)}
-
           >
             Next
           </PaginationNext>
         </Pagination>
       </div>
-    </>
+    </div>
   );
 };
 

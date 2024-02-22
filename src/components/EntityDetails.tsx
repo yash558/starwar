@@ -4,8 +4,7 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+  SheetTitle
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
@@ -19,13 +18,15 @@ interface EntityDetailsProps {
     vehicles: string[];
     starships: string[];
   };
+  onClose: () => void; // Callback function to close the sheet
 }
 
-const EntityDetails: React.FC<EntityDetailsProps> = ({ entity }) => {
+const EntityDetails: React.FC<EntityDetailsProps> = ({ entity, onClose }) => {
   const [filmNames, setFilmNames] = useState<string[]>([]);
   const [homeworld, setHomeworld] = useState<string>('');
   const [vehicleDetails, setVehicleDetails] = useState<string[]>([]);
   const [starshipDetails, setStarshipDetails] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchHomeworld = async () => {
@@ -84,10 +85,7 @@ const EntityDetails: React.FC<EntityDetailsProps> = ({ entity }) => {
   }, [entity.films, entity.homeworld, entity.vehicles, entity.starships]);
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
-      </SheetTrigger>
+    <Sheet open onOpenChange={onClose} >
       <SheetContent className="p-4">
         <SheetHeader>
           <SheetTitle className="text-lg font-semibold text-gray-800">Character Name : {entity.name}</SheetTitle>

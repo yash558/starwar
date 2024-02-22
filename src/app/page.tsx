@@ -9,7 +9,8 @@ export default function Home() {
   const router = useSearchParams();
   const [people, setPeople] = useState<any[]>([]);
   const [selectedPerson, setSelectedPerson] = useState<any | null>(null);
-
+  
+ // apis to get all data of star wars characters
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,13 +28,22 @@ export default function Home() {
     setSelectedPerson(entity);
   };
 
+  const handleClose = () => {
+    setSelectedPerson(null);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-6">
-      <h1 className="text-3xl font-semibold mb-8">Star Wars People</h1>
-      <div className="w-full  bg-white mb-8">
-        <EntityTable entities={people} onRowClick={handlePersonClick} />
-      </div>
-      {selectedPerson && <EntityDetails entity={selectedPerson} />}
-    </main>
+    <div className="bg-black overflow-hidden">
+      <video autoPlay loop muted className="absolute inset-0 z-0 w-full min-h-full object-cover">
+        <source src="bg.mp4" type="video/mp4" />
+      </video>
+      <main className="relative z-10 flex flex-col items-center justify-start md:px-12 p-6">
+        <img src="/bgt.png" alt="Star Wars Logo" className="w-48 md:w-64 mb-8" />        
+        <div className="w-full bg-white mb-8">
+          <EntityTable entities={people} onRowClick={handlePersonClick} />
+        </div>
+        {selectedPerson && <EntityDetails entity={selectedPerson} onClose={handleClose} />}
+      </main>
+    </div>
   );
 }
