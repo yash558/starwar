@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect} from 'react';
-import { useSearchParams } from 'next/navigation';
 import { fetchEntities } from '../apis/api';
 import EntityDetails from '@/components/EntityDetails';
 import EntityTable from '@/components/EntityTable';
 
 export default function Home() {
-  const router = useSearchParams();
+
   const [people, setPeople] = useState<any[]>([]);
   const [selectedPerson, setSelectedPerson] = useState<any | null>(null);
   
