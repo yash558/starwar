@@ -81,19 +81,19 @@ const EntityTable: React.FC<EntityTableProps> = ({ entities, onRowClick }) => {
       {/* Pagination */}
       <div className="flex justify-center mt-4">
         <Pagination>
-          <PaginationPrevious onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+          <PaginationPrevious onClick={() => setCurrentPage(currentPage - 1)} >
             Previous
           </PaginationPrevious>
           <PaginationContent>
             {Array.from({ length: Math.ceil(filteredEntities.length / entitiesPerPage) }, (_, i) => (
-              <PaginationItem key={i} onClick={() => paginate(i + 1)} active={i + 1 === currentPage}>
+              <PaginationItem key={i} onClick={() => paginate(i + 1)}>
                 <PaginationLink>{i + 1}</PaginationLink>
               </PaginationItem>
             ))}
           </PaginationContent>
           <PaginationNext
             onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === Math.ceil(filteredEntities.length / entitiesPerPage)}
+
           >
             Next
           </PaginationNext>
