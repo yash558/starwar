@@ -81,7 +81,7 @@ const EntityDetails: React.FC<EntityDetailsProps> = ({ entity }) => {
     fetchHomeworld();
     fetchVehicleDetails();
     fetchStarshipDetails();
-  }, [entity.films,]);
+  }, [entity.films, entity.homeworld, entity.vehicles, entity.starships]);
 
   return (
     <Sheet>
@@ -94,33 +94,35 @@ const EntityDetails: React.FC<EntityDetailsProps> = ({ entity }) => {
         </SheetHeader>
         <div className="mt-4">
           {
-            homeworld && 
-          <div className="mb-4">
-            <p className="text-sm font-semibold">Home:</p>
-            <h1>{homeworld}</h1>
-          </div>
+            homeworld.length > 0 &&
+            <div className="mb-4">
+              <p className="text-sm font-semibold">Home:</p>
+              <h1>{homeworld}</h1>
+            </div>
           }
-          <div className="mb-4">
-            <p className="text-sm font-semibold">Vehicles:</p>
-            <ul className="list-disc list-inside">
-              {vehicleDetails.map((vehicleName, index) => (
-                <li key={index} className="ml-2">{vehicleName}</li>
-              ))}
-            </ul>
-          </div>
-          {
-            starshipDetails && 
-          <div className="mb-4">
-            <p className="text-sm font-semibold">Starships:</p>
-            <ul className="list-disc list-inside">
-              {starshipDetails.map((starshipName, index) => (
-                <li key={index} className="ml-2">{starshipName}</li>
-              ))}
-            </ul>
-          </div>
+          {vehicleDetails.length > 0 &&
+            <div className="mb-4">
+              <p className="text-sm font-semibold">Vehicles:</p>
+              <ul className="list-disc list-inside">
+                {vehicleDetails.map((vehicleName, index) => (
+                  <li key={index} className="ml-2">{vehicleName}</li>
+                ))}
+              </ul>
+            </div>
           }
           {
-            filmNames && <div className="mb-4">
+            starshipDetails.length > 0 &&
+            <div className="mb-4">
+              <p className="text-sm font-semibold">Starships:</p>
+              <ul className="list-disc list-inside">
+                {starshipDetails.map((starshipName, index) => (
+                  <li key={index} className="ml-2">{starshipName}</li>
+                ))}
+              </ul>
+            </div>
+          }
+          {
+            filmNames.length > 0 && <div className="mb-4">
               <p className="text-sm font-semibold">Films:</p>
               <ul className="list-disc list-inside">
                 {filmNames.map((filmName, index) => (
